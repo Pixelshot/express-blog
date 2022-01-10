@@ -19,27 +19,52 @@ app.use(cors());
 // How to render our view
 // Use res.render(name of the file without the extension. extension has been declared at the top with app.set())
 app.get('/', (req, res) => {
-  res.render('index');
+  const blogs = [
+    {
+      title: 'Yoshi finds eggs',
+      snippet: 'Lorem ipsum dolor sit amet consectetur',
+    },
+    {
+      title: 'Mario finds stars',
+      snippet: 'Lorem ipsum dolor sit amet consectetur',
+    },
+    {
+      title: 'How to defeat bowser',
+      snippet: 'Lorem ipsum dolor sit amet consectetur',
+    },
+  ];
+  // Dynamic data is passed through to our front-end via object as a second argument in res.render()
+  res.render('index', {
+    title: 'Home',
+    blogs,
+  });
 });
 
 app.get('/about', (req, res) => {
-  res.render('about');
+  res.render('about', {
+    title: 'About',
+  });
 });
 
 app.get('/blogs/create', (req, res) => {
-  res.render('create');
+  res.render('create', {
+    title: 'Create New Blog',
+  });
 });
 
 // 404 page
 // this use method tells express to use this function for every incoming request.
 // Hence why this needs to be at the bottom of the file, otherwise it'll stop other routes from running.
 app.use((req, res) => {
-  res.status(404).render('404');
+  res.status(404).render('404', {
+    title: '404',
+  });
 });
 
 // listen for requests
 app.listen(3000);
 
+// === === === === === === === === === === === === === === === === === === === === === === === === ===
 // app.get('/', (req, res) => {
 //   // res.send('<p>home page</p>');
 //   // use sendFile to serve our HTML page.

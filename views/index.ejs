@@ -1,26 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pixelshot Blog</title>
-  </head>
+  <%- include('./partials/head.ejs') %>
   <body>
-    <nav>
-      <div class="site-title">
-        <a href="/"><h1>Pixelshot Blog</h1></a>
-        <p>A Pixelshot Site</p>
-      </div>
-      <ul>
-        <li><a href="/">Blogs</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/blogs/create">New Blog</a></li>
-      </ul>
-    </nav>
+    <!-- Syntax for importing partials. -->
+    <!-- Whenever we use include() in ejs, we use - instead of = -->
+    <!-- This is because equal sign(=) escapes special characters. Minus sign doesn't do that -->
+    <%- include('./partials/nav.ejs') %>
 
     <div class="blogs content">
+      <%if (blogs.length > 0) {%>
       <h2>All Blogs</h2>
+      <%} else {%>
+      <h2>There are no blogs to display...</h2>
+      <%}%> <%if (blogs.length > 0) {%> <% blogs.map((blog) => {%>
+      <h3 class="title"><%= blog.title %></h3>
+      <p class="snippet"><%= blog.snippet %></p>
+      <%})%> <% } %>
     </div>
+
+    <%- include('./partials/footer.ejs') %>
   </body>
 </html>
