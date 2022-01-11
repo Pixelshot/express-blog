@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const morgan = require('morgan');
 
 // express app
 const app = express();
@@ -15,6 +16,16 @@ app.set('view engine', 'ejs');
 app.use(cors());
 
 // Express will run through these routes from TOP to BOTTOM
+
+// Middleware & Static Files
+// The server protects our files automatically from users in a browser. They can't just access our files anytime they want.
+// We have to specify what files should be allowed for public view.
+// Usually app.use() is used for middlewares.
+// Use built in Express function express.static('name of the folder for the public') to serve our CSS.
+app.use(express.static('public'));
+
+// Morgan
+app.use(morgan('dev'));
 
 // How to render our view
 // Use res.render(name of the file without the extension. extension has been declared at the top with app.set())
