@@ -4,8 +4,9 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const Blog = require('./models/blog');
 
-const dbURI =
-  'mongodb+srv://pixelshot:pixelshot123@clusterninjaexpress.wyvhm.mongodb.net/node-tuts?retryWrites=true&w=majority';
+require('dotenv').config();
+
+const dbURI = process.env.db_URI;
 mongoose
   .connect(dbURI, {
     useNewUrlParser: true,
