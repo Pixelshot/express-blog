@@ -2,6 +2,18 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 
+require('dotenv').config();
+
+const dbURI = process.env.db_URI;
+mongoose
+  .connect(dbURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  // Only listen for requests AFTER connection to the database is established
+  .then((data) => app.listen(3000))
+  .catch((err) => console.log(err));
+
 // express app
 const app = express();
 
