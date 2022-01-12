@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "crash-course",
   "version": "1.0.0",
@@ -18,3 +19,25 @@
     "morgan": "^1.10.0"
   }
 }
+=======
+{
+  "name": "crash-course",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.6",
+    "morgan": "^1.10.0"
+  }
+}
+>>>>>>> d23272ae3e9f9aea48302b278d41a7485f010e89
