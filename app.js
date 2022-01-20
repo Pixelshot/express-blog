@@ -39,6 +39,8 @@ app.use(cors());
 // Use built in Express function express.static('name of the folder for the public') to serve our CSS.
 app.use(express.static('public'));
 
+// This middleware is used to save/capture data from our form(that's attached to name attributes) into a workable format.
+app.use(express.urlencoded({ extended: true })); // extended option is optional
 // Morgan
 app.use(morgan('dev'));
 
@@ -55,7 +57,10 @@ app.get('/about', (req, res) => {
 });
 
 // mongoose and mongo sandbox routes
+
 // Blog Routes
+
+// Get Method
 app.get('/blogs', (req, res) => {
   // There is a sort method in mongoose.
   // createdAt is coming from Blog Model
@@ -73,6 +78,16 @@ app.get('/blogs', (req, res) => {
     });
 });
 
+// Post Method
+// middleware express.urlencoded() grants us access to the data from form.
+app.post('/blogs', (req, res) => {
+  const blog = new Blog(req.body);
+  blog
+    .save()
+    .then((result) => res.redirect('/'))
+    .catch((err) => console.log(err));
+});
+
 // Get all blogs
 app.get('/all-blogs', (req, res) => {
   Blog.find()
@@ -83,21 +98,6 @@ app.get('/all-blogs', (req, res) => {
 // Get a single blog
 app.get('/single-blog', (req, res) => {
   Blog.findById('61de6d6f48a4deeb3adf2ea4')
-    .then((result) => res.send(result))
-    .catch((err) => console.log(err));
-});
-
-// Add a blog
-app.get('/add-blog', (req, res) => {
-  const blog = new Blog({
-    title: 'New Blog 2',
-    snippet: 'about my new blog',
-    body: 'more about my new blog',
-  });
-
-  // save() is a mongoose method
-  blog
-    .save()
     .then((result) => res.send(result))
     .catch((err) => console.log(err));
 });
@@ -164,4 +164,19 @@ app.use((req, res) => {
 // app.get('/about-us', (req, res) => {
 //   // Under the hood express makes a new request and send this request to '/about'
 //   res.redirect('/about');
+// });
+
+// // Add a blog
+// app.get('/add-blog', (req, res) => {
+//   const blog = new Blog({
+//     title: 'New Blog 2',
+//     snippet: 'about my new blog',
+//     body: 'more about my new blog',
+//   });
+
+//   // save() is a mongoose method
+//   blog
+//     .save()
+//     .then((result) => res.send(result))
+//     .catch((err) => console.log(err));
 // });

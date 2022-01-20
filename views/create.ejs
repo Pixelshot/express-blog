@@ -5,7 +5,9 @@
     <%- include('./partials/nav.ejs') %>
 
     <div class="create-blog content">
-      <form>
+      <!-- action is the value where we want to send the request to -->
+      <form action="/blogs" method="POST">
+        <!-- To attach data to the body of the post request so we can access that on the server, we use 'name' attribute -->
         <label for="title">Blog title:</label>
         <input type="text" id="title" name="title" required />
         <label for="snippet">Blog snippet:</label>
