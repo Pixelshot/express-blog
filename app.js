@@ -13,9 +13,12 @@ mongoose
     useUnifiedTopology: true,
   })
   // Only listen for requests AFTER connection to the database is established
-  .then((data) => app.listen(3000))
+  .then((data) => {
+    app.listen(3000),
+      console.log('MongoDB database connection established successfully...');
+  })
   .catch((err) => console.log(err));
-
+console.log('mongoose connection: ', mongoose.connection);
 // express app
 const app = express();
 
