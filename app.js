@@ -91,24 +91,30 @@ app.post('/blogs', (req, res) => {
     .catch((err) => console.log(err));
 });
 
-// Get all blogs
-app.get('/all-blogs', (req, res) => {
-  Blog.find()
-    .then((result) => res.send(result))
-    .catch((err) => console.log(err));
-});
-
-// Get a single blog
-app.get('/single-blog', (req, res) => {
-  Blog.findById('61de6d6f48a4deeb3adf2ea4')
-    .then((result) => res.send(result))
-    .catch((err) => console.log(err));
-});
-
+// Create blog - This should be higher than getting a single blog[get('blogs/:id')]
 app.get('/blogs/create', (req, res) => {
   res.render('create', {
     title: 'Create New Blog',
   });
+});
+
+// Get a single blog
+app.get('/blogs/:id', (req, res) => {
+  const id = req.params.id;
+  Blog.findById(id)
+    .then((result) =>
+      res.render('details', { blog: result, title: 'Blog Details' })
+    )
+    .catch((err) => console.log(err));
+});
+
+// Delete a blog
+// For delete we'll need to use an npm package to override html method because by default it only accepts GET & POST
+app.delete('/blogs/:id', (req, res) => {
+  const id = req.params.id;
+  Blog.findByIdAndDelete(id)
+    .then((result) => res.json({ redirect: '/blogs' }))
+    .catch((err) => console.log('error: ', err));
 });
 
 // 404 page
@@ -182,4 +188,17 @@ app.use((req, res) => {
 //     .save()
 //     .then((result) => res.send(result))
 //     .catch((err) => console.log(err));
+// });
+
+// Get all blogs(this returns an array of objects containing all of the info)
+// app.get('/all-blogs', (req, res) => {
+//   Blog.find()
+//     .then((result) => res.send(result))
+//     .catch((err) => console.log(err));
+// });
+
+// app.get('/single-blog', (req, res) => {
+//   Blog.findById('61de6d6f48a4deeb3adf2ea4')
+//   .then((result) => res.send(result))
+//   .catch((err) => console.log(err));
 // });

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head.ejs') %>
+  <body>
+    <!-- Syntax for importing partials. -->
+    <!-- Whenever we use include() in ejs, we use - instead of = -->
+    <!-- This is because equal sign(=) escapes special characters. Minus sign doesn't do that -->
+    <%- include('./partials/nav.ejs') %>
+
+    <div class="details content">
+      <h2><%= blog.title %></h2>
+      <div class="content">
+        <p><%= blog.body %></p>
+      </div>
+      <!-- data is a special HTML attribute that is used to store custom data private to the page or application -->
+      <!-- <a class="delete" name="delete" data-doc="<%= blog._id %>">Delete</a> -->
+      <a
+        class="delete"
+        name="delete"
+        href="/blogs/<%= blog._id %>"
+        data-doc="<%= blog._id %>"
+        >Delete</a
+      >
+    </div>
+
+    <%- include('./partials/footer.ejs') %>
+  </body>
+</html>
