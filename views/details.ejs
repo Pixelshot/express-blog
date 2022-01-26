@@ -9,18 +9,14 @@
 
     <div class="details content">
       <h2><%= blog.title %></h2>
-      <div class="content">
+      <div class="content blog-content">
         <p><%= blog.body %></p>
       </div>
       <!-- data is a special HTML attribute that is used to store custom data private to the page or application -->
       <!-- <a class="delete" name="delete" data-doc="<%= blog._id %>">Delete</a> -->
-      <a
-        class="delete"
-        name="delete"
-        href="/blogs/<%= blog._id %>"
-        data-doc="<%= blog._id %>"
-        >Delete</a
-      >
+      <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+        <button type="submit" class="delete">Delete</button>
+      </form>
     </div>
 
     <%- include('./partials/footer.ejs') %>

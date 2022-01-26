@@ -3,6 +3,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const Blog = require('./models/blog');
+const methodOverride = require('method-override');
 
 require('dotenv').config();
 
@@ -46,6 +47,8 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true })); // extended option is optional
 // Morgan
 app.use(morgan('dev'));
+// Method override is used to override html method. By default it only supports GET and POST. We want to use this package for put/delete and possibly others
+app.use(methodOverride('_method'));
 
 // How to render our view
 // Use res.render(name of the file without the extension. extension has been declared at the top with app.set())
@@ -113,7 +116,7 @@ app.get('/blogs/:id', (req, res) => {
 app.delete('/blogs/:id', (req, res) => {
   const id = req.params.id;
   Blog.findByIdAndDelete(id)
-    .then((result) => res.json({ redirect: '/blogs' }))
+    .then(res.redirect('/'))
     .catch((err) => console.log('error: ', err));
 });
 
