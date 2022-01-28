@@ -2,8 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const Blog = require('./models/blog');
 const methodOverride = require('method-override');
+const blogRoutes = require('./routes/blogRoutes');
 
 require('dotenv').config();
 
@@ -65,61 +65,7 @@ app.get('/about', (req, res) => {
 // mongoose and mongo sandbox routes
 
 // Blog Routes
-
-// Get Method
-app.get('/blogs', (req, res) => {
-  // There is a sort method in mongoose.
-  // createdAt is coming from Blog Model
-  // - 1 = descending order. Newest to oldest
-  Blog.find()
-    .sort({ createdAt: -1 })
-    .then((result) => {
-      res.render('index', {
-        title: 'Home',
-        blogs: result,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
-// Post Method
-// middleware express.urlencoded() grants us access to the data from form.
-app.post('/blogs', (req, res) => {
-  const blog = new Blog(req.body);
-  blog
-    .save()
-    .then((result) => res.redirect('/'))
-    .catch((err) => console.log(err));
-});
-
-// Create blog - This should be higher than getting a single blog[get('blogs/:id')]
-app.get('/blogs/create', (req, res) => {
-  res.render('create', {
-    title: 'Create New Blog',
-  });
-});
-
-// Get a single blog
-app.get('/blogs/:id', (req, res) => {
-  const id = req.params.id;
-  Blog.findById(id)
-    .then((result) =>
-      res.render('details', { blog: result, title: 'Blog Details' })
-    )
-    .catch((err) => console.log(err));
-});
-
-// Delete a blog
-// For delete we'll need to use an npm package to override html method because by default it only accepts GET & POST
-app.delete('/blogs/:id', (req, res) => {
-  const id = req.params.id;
-  Blog.findByIdAndDelete(id)
-    .then(res.redirect('/'))
-    .catch((err) => console.log('error: ', err));
-});
-
+app.use('/blogs', blogRoutes);
 // 404 page
 // this use method tells express to use this function for every incoming request.
 // Hence why this needs to be at the bottom of the file, otherwise it'll stop other routes from running.
