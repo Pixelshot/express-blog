@@ -15,7 +15,9 @@
       <!-- data is a special HTML attribute that is used to store custom data private to the page or application -->
       <!-- <a class="delete" name="delete" data-doc="<%= blog._id %>">Delete</a> -->
       <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
-        <button type="submit" class="delete">Delete</button>
+        <button type="submit" class="delete">
+          <i class="fa fa-trash" aria-hidden="true"></i>
+        </button>
       </form>
     </div>
 
