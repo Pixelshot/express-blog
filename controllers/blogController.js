@@ -1,5 +1,6 @@
 const Blog = require('../models/blog');
 
+// List of blogs
 const blog_index = (req, res) => {
   // There is a sort method in mongoose.
   // createdAt is coming from Blog Model
@@ -17,6 +18,7 @@ const blog_index = (req, res) => {
     });
 };
 
+// Specific blog
 const blog_details = (req, res) => {
   const id = req.params.id;
   Blog.findById(id)
@@ -26,6 +28,7 @@ const blog_details = (req, res) => {
     .catch((err) => console.log(err));
 };
 
+// Create a new blog(post))
 blog_create_post = (req, res) => {
   const blog = new Blog(req.body);
   blog
@@ -34,12 +37,16 @@ blog_create_post = (req, res) => {
     .catch((err) => console.log(err));
 };
 
+// Create a new blog(get)
 blog_create_get = (req, res) => {
   res.render('create', {
     title: 'Create New Blog',
   });
 };
 
+// Create a new blog(put)
+
+// Delete a blog
 blog_delete = (req, res) => {
   const id = req.params.id;
   Blog.findByIdAndDelete(id)
